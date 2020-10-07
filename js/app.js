@@ -2,337 +2,146 @@
 //Global variable Store Hours
 var storeHours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
 
-//Object 1 creating the seattle store
+//Object Constructor
 
-var seattle = {
-  name: 'Seattle',
-  avgerageCookiePerCustomer: 6.3,
-  minimumCustomersPerHour: 23,
-  maximumCustomersPerHour: 65,
-  totalCookiesForTheDay: 0,
+var allStores = [];
 
-  // an array that will hold the number of customers each hour
-  customersEachHour: [],
+function Store(name, avgerageCookiePerCustomer, minimumCustomersPerHour, maximumCustomersPerHour, totalCookiesForTheDay) {
+  this.name = name;
+  this.avgerageCookiePerCustomer = avgerageCookiePerCustomer;
+  this.minimumCustomersPerHour = minimumCustomersPerHour;
+  this.maximumCustomersPerHour = maximumCustomersPerHour;
+  this.totalCookiesForTheDay = totalCookiesForTheDay;
+  this.customersEachHour = [];
+  this.cookiesSoldEachHour = [];
+  allStores.push(this);
+}
+Store.prototype.generateCustomersEachHour = function () {
+  for (var i = 0; i < storeHours.length; i++) {
+    var randomNumber = Math.floor(Math.random() * (this.maximumCustomersPerHour - this.minimumCustomersPerHour + 1) + this.minimumCustomersPerHour);
 
-  // an array that holds the number of cookies sold each hour to do this we will need to multiply the number of customers each hour by the average number of cookies for this store and round
-
-  cookiesSoldEachHour: [],
-
-  //a function that generates the customersEachHour array
-  //get a random number between min and max -random number generator
-  // create a loop that will run the random number generator for each hour the store is open
-
-  generateCustomersEachhour: function () {
-    for (var i = 0; i < storeHours.length; i++) {
-      var randomNumber = Math.floor(Math.random() * (this.maximumCustomersPerHour - this.minimumCustomersPerHour + 1) + this.minimumCustomersPerHour);
-
-      this.customersEachHour.push(randomNumber);
-    }
-  },
-  // a function that will: 1. loop over the number of customers each hour and multiply by the average cookies sold to return the number of cookies each hour 2. Round up 3. put the results into the cookiesSoldEachHour array.
-
-  generateCookiesSoldEachHour: function () {
-    this.generateCustomersEachhour();
-
-    for (var i = 0; i < storeHours.length; i++) {
-      var cookiesSoldthisHour = Math.ceil(this.customersEachHour[i] * this.avgerageCookiePerCustomer);
-
-      this.totalCookiesForTheDay += cookiesSoldthisHour;
-
-      this.cookiesSoldEachHour.push(cookiesSoldthisHour);
-    }
-  },
-
-  render: function () {
-    //get seattle section from DOM
-    var parentSection = document.getElementById('seattle');
-    // creatte an h2
-    var headingSeattle = document.createElement('h2');
-    //fill it with content 'seattle'
-    headingSeattle.textContent = this.name;
-    //append it to the parent
-    parentSection.appendChild(headingSeattle);
-    //get the ul with the id of seattle-sales from the DOM -- parent element
-    var salesList = document.getElementById('seattle-sales');
-    //loop over array called cookiesSoldEachHour
-    for (var i = 0; i < this.cookiesSoldEachHour.length; i++) {
-      //create and li
-      var liElement = document.createElement('li');
-      //fill it with the content from the cookies sold each hour array
-      liElement.textContent = `${storeHours[i]}: ${this.cookiesSoldEachHour[i]} cookies`;
-      //append it to the paretn
-      salesList.appendChild(liElement);
-    }
+    this.customersEachHour.push(randomNumber);
   }
 };
 
+Store.prototype.generateCookiesSoldEachHour = function () {
+  for (var i = 0; i < storeHours.length; i++) {
+    var cookiesSoldthisHour = Math.ceil(this.customersEachHour[i] * this.avgerageCookiePerCustomer);
+
+    this.totalCookiesForTheDay += cookiesSoldthisHour;
+
+    this.cookiesSoldEachHour.push(cookiesSoldthisHour);
+  }
+};
+
+//object instances to create stores
+var seattle = new Store('seattle', 6.3, 23, 65, 0);
+var tokyo = new Store('tokyo', 1.2, 3, 24, 0);
+var dubai = new Store('dubai', 3.7, 11, 38, 0);
+var paris = new Store('paris', 2.3, 20, 38, 0);
+var lima = new Store('lima', 4.6, 2, 16, 0);
+
+seattle.generateCustomersEachHour();
 seattle.generateCookiesSoldEachHour();
-seattle.render();
+
+tokyo.generateCustomersEachHour();
+tokyo.generateCookiesSoldEachHour();
+
+dubai.generateCustomersEachHour();
+dubai.generateCookiesSoldEachHour();
+
+paris.generateCustomersEachHour();
+paris.generateCookiesSoldEachHour();
+
+lima.generateCustomersEachHour();
+lima.generateCookiesSoldEachHour();
+
+console.log(allStores);
+
 
 //Object 2 creating the tokyo store
 
-var tokyo = {
-  name: 'Tokyo',
-  avgerageCookiePerCustomer: 1.2,
-  minimumCustomersPerHour: 3,
-  maximumCustomersPerHour: 24,
-  totalCookiesForTheDay: 0,
+// var tokyo = {
+//   name: 'Tokyo',
+//   avgerageCookiePerCustomer: 1.2,
+//   minimumCustomersPerHour: 3,
+//   maximumCustomersPerHour: 24,
+//   totalCookiesForTheDay: 0,
 
-  // an array that will hold the number of customers each hour
-  customersEachHour: [],
+//   // an array that will hold the number of customers each hour
+//   customersEachHour: [],
 
-  // an array that holds the number of cookies sold each hour to do this we will need to multiply the number of customers each hour by the average number of cookies for this store and round
+//   // an array that holds the number of cookies sold each hour to do this we will need to multiply the number of customers each hour by the average number of cookies for this store and round
 
-  cookiesSoldEachHour: [],
+//   cookiesSoldEachHour: [],
 
-  //a function that generates the customersEachHour array
-  //get a random number between min and max -random number generator
-  // create a loop that will run the random number generator for each hour the store is open
+//   //a function that generates the customersEachHour array
+//   //get a random number between min and max -random number generator
+//   // create a loop that will run the random number generator for each hour the store is open
 
-  generateCustomersEachhour: function () {
-    for (var i = 0; i < storeHours.length; i++) {
-      var randomNumber = Math.floor(Math.random() * (this.maximumCustomersPerHour - this.minimumCustomersPerHour + 1) + this.minimumCustomersPerHour);
+//   generateCustomersEachhour: function () {
+//     for (var i = 0; i < storeHours.length; i++) {
+//       var randomNumber = Math.floor(Math.random() * (this.maximumCustomersPerHour - this.minimumCustomersPerHour + 1) + this.minimumCustomersPerHour);
 
-      this.customersEachHour.push(randomNumber);
-    }
-  },
-  // a function that will: 1. loop over the number of customers each hour and multiply by the average cookies sold to return the number of cookies each hour 2. Round up 3. put the results into the cookiesSoldEachHour array.
+//       this.customersEachHour.push(randomNumber);
+//     }
+//   },
+//   // a function that will: 1. loop over the number of customers each hour and multiply by the average cookies sold to return the number of cookies each hour 2. Round up 3. put the results into the cookiesSoldEachHour array.
 
-  generateCookiesSoldEachHour: function () {
-    this.generateCustomersEachhour();
+//   generateCookiesSoldEachHour: function () {
+//     this.generateCustomersEachhour();
 
-    for (var i = 0; i < storeHours.length; i++) {
-      var cookiesSoldthisHour = Math.ceil(this.customersEachHour[i] * this.avgerageCookiePerCustomer);
+//     for (var i = 0; i < storeHours.length; i++) {
+//       var cookiesSoldthisHour = Math.ceil(this.customersEachHour[i] * this.avgerageCookiePerCustomer);
 
-      this.totalCookiesForTheDay += cookiesSoldthisHour;
+//       this.totalCookiesForTheDay += cookiesSoldthisHour;
 
-      this.cookiesSoldEachHour.push(cookiesSoldthisHour);
-    }
-  },
+//       this.cookiesSoldEachHour.push(cookiesSoldthisHour);
+//     }
+//   },
 
-  render: function () {
-    //get tokyo section from DOM
-    var parentSection = document.getElementById('tokyo');
-    // creatte an h2
-    var headingTokyo = document.createElement('h2');
-    //fill it with content 'seattle'
-    headingTokyo.textContent = this.name;
-    //append it to the parent
-    parentSection.appendChild(headingTokyo);
-    //get the ul with the id of seattle-sales from the DOM -- parent element
-    var salesList = document.getElementById('tokyo-sales');
-    //loop over array called cookiesSoldEachHour
-    for (var i = 0; i < this.cookiesSoldEachHour.length; i++) {
-      //create and li
-      var liElement = document.createElement('li');
-      //fill it with the content from the cookies sold each hour array
-      liElement.textContent = `${storeHours[i]}: ${this.cookiesSoldEachHour[i]} cookies`;
-      //append it to the paretn
-      salesList.appendChild(liElement);
-    }
+var parentElement = document.getElementById('table');
+function generateHeaderRow() {
+  //create a tr
+  var trElement = document.createElement('tr');
+  var headerArray = ['Name', 'Type', 'Color', 'Age'];
+  for (var i = 0; i < headerArray.length; i++) {
+    //create a th
+    var thElement = document.createElement('th');
+    // fill it with content - 'Name'
+    thElement.textContent = headerArray[i];
+    //append to the tr element
+    trElement.appendChild(thElement);
   }
-};
+// append the tr to the tbody
+parentElement.appendChild(trElement);
+}
+generateHeaderRow();
+
+
+
+// function render() {
+//   //get tokyo section from DOM
+//   var parentSection = document.getElementById('tokyo');
+//   // creatte an h2
+//   var headingTokyo = document.createElement('h2');
+//   //fill it with content 'seattle'
+//   headingTokyo.textContent = this.name;
+//   //append it to the parent
+//   parentSection.appendChild(headingTokyo);
+//   //get the ul with the id of seattle-sales from the DOM -- parent element
+//   var salesList = document.getElementById('tokyo-sales');
+//   //loop over array called cookiesSoldEachHour
+//   for (var i = 0; i < this.cookiesSoldEachHour.length; i++) {
+//     //create and li
+//     var liElement = document.createElement('li');
+//     //fill it with the content from the cookies sold each hour array
+//     liElement.textContent = `${storeHours[i]}: ${this.cookiesSoldEachHour[i]} cookies`;
+//     //append it to the paretn
+//     salesList.appendChild(liElement);
+//   }
+// }
+
 
 tokyo.generateCookiesSoldEachHour();
-tokyo.render();
-
-//Object 3 creating the dubai store
-
-var dubai = {
-  name: 'Dubai',
-  avgerageCookiePerCustomer: 3.7,
-  minimumCustomersPerHour: 11,
-  maximumCustomersPerHour: 38,
-  totalCookiesForTheDay: 0,
-
-  // an array that will hold the number of customers each hour
-  customersEachHour: [],
-
-  // an array that holds the number of cookies sold each hour to do this we will need to multiply the number of customers each hour by the average number of cookies for this store and round
-
-  cookiesSoldEachHour: [],
-
-  //a function that generates the customersEachHour array
-  //get a random number between min and max -random number generator
-  // create a loop that will run the random number generator for each hour the store is open
-
-  generateCustomersEachhour: function () {
-    for (var i = 0; i < storeHours.length; i++) {
-      var randomNumber = Math.floor(Math.random() * (this.maximumCustomersPerHour - this.minimumCustomersPerHour + 1) + this.minimumCustomersPerHour);
-
-      this.customersEachHour.push(randomNumber);
-    }
-  },
-  // a function that will: 1. loop over the number of customers each hour and multiply by the average cookies sold to return the number of cookies each hour 2. Round up 3. put the results into the cookiesSoldEachHour array.
-
-  generateCookiesSoldEachHour: function () {
-    this.generateCustomersEachhour();
-
-    for (var i = 0; i < storeHours.length; i++) {
-      var cookiesSoldthisHour = Math.ceil(this.customersEachHour[i] * this.avgerageCookiePerCustomer);
-
-      this.totalCookiesForTheDay += cookiesSoldthisHour;
-
-      this.cookiesSoldEachHour.push(cookiesSoldthisHour);
-    }
-  },
-
-  render: function () {
-    //get dubai section from DOM
-    var parentSection = document.getElementById('dubai');
-    // creatte an h2
-    var headingDubai = document.createElement('h2');
-    //fill it with content 'seattle'
-    headingDubai.textContent = this.name;
-    //append it to the parent
-    parentSection.appendChild(headingDubai);
-    //get the ul with the id of seattle-sales from the DOM -- parent element
-    var salesList = document.getElementById('dubai-sales');
-    //loop over array called cookiesSoldEachHour
-    for (var i = 0; i < this.cookiesSoldEachHour.length; i++) {
-      //create and li
-      var liElement = document.createElement('li');
-      //fill it with the content from the cookies sold each hour array
-      liElement.textContent = `${storeHours[i]}: ${this.cookiesSoldEachHour[i]} cookies`;
-      //append it to the paretn
-      salesList.appendChild(liElement);
-    }
-  }
-};
-
-dubai.generateCookiesSoldEachHour();
-dubai.render();
-
-//Object 4 creating the paris store
-
-var paris = {
-  name: 'Paris',
-  avgerageCookiePerCustomer: 2.3,
-  minimumCustomersPerHour: 20,
-  maximumCustomersPerHour: 38,
-  totalCookiesForTheDay: 0,
-
-  // an array that will hold the number of customers each hour
-  customersEachHour: [],
-
-  // an array that holds the number of cookies sold each hour to do this we will need to multiply the number of customers each hour by the average number of cookies for this store and round
-
-  cookiesSoldEachHour: [],
-
-  //a function that generates the customersEachHour array
-  //get a random number between min and max -random number generator
-  // create a loop that will run the random number generator for each hour the store is open
-
-  generateCustomersEachhour: function () {
-    for (var i = 0; i < storeHours.length; i++) {
-      var randomNumber = Math.floor(Math.random() * (this.maximumCustomersPerHour - this.minimumCustomersPerHour + 1) + this.minimumCustomersPerHour);
-
-      this.customersEachHour.push(randomNumber);
-    }
-  },
-  // a function that will: 1. loop over the number of customers each hour and multiply by the average cookies sold to return the number of cookies each hour 2. Round up 3. put the results into the cookiesSoldEachHour array.
-
-  generateCookiesSoldEachHour: function () {
-    this.generateCustomersEachhour();
-
-    for (var i = 0; i < storeHours.length; i++) {
-      var cookiesSoldthisHour = Math.ceil(this.customersEachHour[i] * this.avgerageCookiePerCustomer);
-
-      this.totalCookiesForTheDay += cookiesSoldthisHour;
-
-      this.cookiesSoldEachHour.push(cookiesSoldthisHour);
-    }
-  },
-
-  render: function () {
-    //get paris section from DOM
-    var parentSection = document.getElementById('paris');
-    // creatte an h2
-    var headingParis = document.createElement('h2');
-    //fill it with content 'seattle'
-    headingParis.textContent = this.name;
-    //append it to the parent
-    parentSection.appendChild(headingParis);
-    //get the ul with the id of seattle-sales from the DOM -- parent element
-    var salesList = document.getElementById('paris-sales');
-    //loop over array called cookiesSoldEachHour
-    for (var i = 0; i < this.cookiesSoldEachHour.length; i++) {
-      //create and li
-      var liElement = document.createElement('li');
-      //fill it with the content from the cookies sold each hour array
-      liElement.textContent = `${storeHours[i]}: ${this.cookiesSoldEachHour[i]} cookies`;
-      //append it to the paretn
-      salesList.appendChild(liElement);
-    }
-  }
-};
-
-paris.generateCookiesSoldEachHour();
-paris.render();
-
-//Object 5 creating the lima store
-
-var lima = {
-  name: 'Lima',
-  avgerageCookiePerCustomer: 4.6,
-  minimumCustomersPerHour: 2,
-  maximumCustomersPerHour: 16,
-  totalCookiesForTheDay: 0,
-
-  // an array that will hold the number of customers each hour
-  customersEachHour: [],
-
-  // an array that holds the number of cookies sold each hour to do this we will need to multiply the number of customers each hour by the average number of cookies for this store and round
-
-  cookiesSoldEachHour: [],
-
-  //a function that generates the customersEachHour array
-  //get a random number between min and max -random number generator
-  // create a loop that will run the random number generator for each hour the store is open
-
-  generateCustomersEachhour: function () {
-    for (var i = 0; i < storeHours.length; i++) {
-      var randomNumber = Math.floor(Math.random() * (this.maximumCustomersPerHour - this.minimumCustomersPerHour + 1) + this.minimumCustomersPerHour);
-
-      this.customersEachHour.push(randomNumber);
-    }
-  },
-  // a function that will: 1. loop over the number of customers each hour and multiply by the average cookies sold to return the number of cookies each hour 2. Round up 3. put the results into the cookiesSoldEachHour array.
-
-  generateCookiesSoldEachHour: function () {
-    this.generateCustomersEachhour();
-
-    for (var i = 0; i < storeHours.length; i++) {
-      var cookiesSoldthisHour = Math.ceil(this.customersEachHour[i] * this.avgerageCookiePerCustomer);
-
-      this.totalCookiesForTheDay += cookiesSoldthisHour;
-
-      this.cookiesSoldEachHour.push(cookiesSoldthisHour);
-    }
-  },
-
-  render: function () {
-    //get lima section from DOM
-    var parentSection = document.getElementById('lima');
-    // creatte an h2
-    var headingLima = document.createElement('h2');
-    //fill it with content 'seattle'
-    headingLima.textContent = this.name;
-    //append it to the parent
-    parentSection.appendChild(headingLima);
-    //get the ul with the id of seattle-sales from the DOM -- parent element
-    var salesList = document.getElementById('lima-sales');
-    //loop over array called cookiesSoldEachHour
-    for (var i = 0; i < this.cookiesSoldEachHour.length; i++) {
-      //create and li
-      var liElement = document.createElement('li');
-      //fill it with the content from the cookies sold each hour array
-      liElement.textContent = `${storeHours[i]}: ${this.cookiesSoldEachHour[i]} cookies`;
-      //append it to the paretn
-      salesList.appendChild(liElement);
-    }
-  }
-};
-
-lima.generateCookiesSoldEachHour();
-lima.render();
+//render(tokyo);
