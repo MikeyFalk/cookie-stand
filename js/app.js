@@ -24,17 +24,17 @@ var seattle = {
 
   generateCustomersEachhour: function () {
     for (var i = 0; i < storeHours.length; i++) {
-      var randomNumber = Math.floor(Math.random() * (this.maximumCustomersPerHour - this.maximumCustomersPerHour + 1) + this.minimumCustomersPerHour);
+      var randomNumber = Math.floor(Math.random() * (this.maximumCustomersPerHour - this.minimumCustomersPerHour + 1) + this.minimumCustomersPerHour);
 
       this.customersEachHour.push(randomNumber);
     }
   },
   // a function that will: 1. loop over the number of customers each hour and multiply by the average cookies sold to return the number of cookies each hour 2. Round up 3. put the results into the cookiesSoldEachHour array.
 
-  generateCookliesSoldEachHour: function () {
+  generateCookiesSoldEachHour: function () {
     this.generateCustomersEachhour();
 
-    for (var i = 0; 1 < storeHours.length; i++) {
+    for (var i = 0; i < storeHours.length; i++) {
       var cookiesSoldthisHour = Math.ceil(this.customersEachHour[i] * this.avgerageCookiePerCustomer);
 
       this.totalCookiesForTheDay += cookiesSoldthisHour;
@@ -53,7 +53,7 @@ var seattle = {
     //append it to the parent
     parentSection.appendChild(headingSeattle);
     //get the ul with the id of seattle-sales from the DOM -- parent element
-    var salesList = document.write.getElementById('Seattle-sales');
+    var salesList = document.getElementById('seattle-sales');
     //loop over array called cookiesSoldEachHour
     for (var i = 0; i < this.cookiesSoldEachHour.length; i++) {
       //create and li
@@ -66,5 +66,5 @@ var seattle = {
   }
 };
 
-seattle.generateCookliesSoldEachHour();
+seattle.generateCookiesSoldEachHour();
 seattle.render();
