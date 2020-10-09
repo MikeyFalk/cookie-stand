@@ -42,6 +42,41 @@ var tokyo = new Store('tokyo', 1.2, 3, 24);
 var dubai = new Store('dubai', 3.7, 11, 38);
 var paris = new Store('paris', 2.3, 20, 38);
 var lima = new Store('lima', 4.6, 2, 16);
+var addedStore = new Store();
+//////////////////////////////////////////////////////////////////////////
+var formElement = document.getElementById('form');
+
+
+//var addedStore = [];
+///////////////////////////////////////////////////////////////////////////////
+function handleSubmit(event){
+  event.preventDefault();
+///////////////////////////////////////////////////////////////////////////////
+  //console.log('this is the new store name', event.target.storename.value);
+  //console.log('maximum customers', event.target.maximumcustomers.value);
+  //console.log(event.target.storename.value);
+  console.log('maximum customers', event.target.cookiespercustomer.value);
+  console.log(addedStore);
+  var newStoreName = event.target.storename.value;
+  var newStoreAveCookie = parseInt(event.target.cookiespercustomer.value);
+  var newStoreMinCust = parseInt(event.target.minipeeps.value);
+  var newStoreMaxCust = parseInt(event.target.maximumcustomers.value);
+  new NewLocation (newStoreName, newStoreAveCookie,newStoreMinCust,newStoreMaxCust);
+  ///console.log(newLocation);
+}
+
+function NewLocation(newStoreName, newStoreAveCookie,newStoreMinCust,newStoreMaxCust) {
+  this.newStoreName=newStoreName;
+  this.newStoreAveCookie=newStoreAveCookie;
+  this.newStoreMinCust=newStoreMinCust;
+  this.newStoreMaxCust=newStoreMaxCust;
+
+  //addedStore.push(this);
+}
+
+formElement.addEventListener('submit', handleSubmit);
+
+console.log(allStores);
 
 seattle.generateCustomersEachHour();
 seattle.generateCookiesSoldEachHour();
@@ -57,6 +92,9 @@ paris.generateCookiesSoldEachHour();
 
 lima.generateCustomersEachHour();
 lima.generateCookiesSoldEachHour();
+
+addedStore.generateCustomersEachHour();
+addedStore.generateCookiesSoldEachHour();
 
 //Create the header row
 function generateHeaderRow() {
