@@ -36,12 +36,16 @@ formElement.addEventListener('submit', handleSubmit);
 
 function headerRow(){
   var trElement = document.createElement('tr');
-  for (var i = -1; i < peopleArray.length; i++) {
-  var thElement = document.createElement('th');
-  thElement.textContent = peopleArray[1];
-  trElement.appendChild(thElement);}
+  if (peopleArray[1] === 'Seattle') thElement.textContent = 'Seattle';
   
-  parentElement.appendChild(trElement);
+  
+  
+  //for (var i = -1; i < peopleArray.length; i++){
+    var thElement = document.createElement('th');
+    thElement.textContent = peopleArray[1];
+    trElement.appendChild(thElement);}
+
+ parentElement.appendChild(trElement);
 }
 headerRow();
 
