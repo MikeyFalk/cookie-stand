@@ -1,6 +1,6 @@
 'use strict';
 //Global variables
-var storeHours = ['','6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', 'total'];
+var storeHours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', 'total'];
 var parentElement = document.getElementById('table');
 var allStores = [];
 var totalOfTotals = 0;
@@ -33,7 +33,7 @@ Store.prototype.generateCookiesSoldEachHour = function () {
 
     this.cookiesSoldEachHour.push(cookiesSoldthisHour);
   }
-  totalOfTotals +=this.totalCookiesForTheDay;
+  totalOfTotals += this.totalCookiesForTheDay;
 };
 
 
@@ -111,7 +111,7 @@ lima.generateCookiesSoldEachHour();
 //Create the header row
 function generateHeaderRow() {
   var trElement = document.createElement('tr');
-  for (var i = 0; i < storeHours.length; i++) {
+  for (var i = -1; i < storeHours.length; i++) {
     var thElement = document.createElement('th');
     thElement.textContent = storeHours[i];
     trElement.appendChild(thElement);
@@ -124,7 +124,7 @@ function generateFooterRow() {
   var tfHeader = document.createElement('td');
   tfHeader.textContent = 'Total';
   tfElement.appendChild(tfHeader);
-  
+
   for (var i = 0; i < storeHours.length - 1; i++) {
     var eachHourTotal = 0;
 
@@ -136,6 +136,11 @@ function generateFooterRow() {
     thElement4.textContent = eachHourTotal;
     tfElement.appendChild(thElement4);
   }
+  var totalTotalCookiesData = document.createElement('td');
+  totalTotalCookiesData.textContent = totalOfTotals;
+  tfElement.appendChild(totalTotalCookiesData);
+
+
   parentElement.appendChild(tfElement);
 }
 
@@ -153,16 +158,14 @@ Store.prototype.render = function () {
     var totalCookiesData = document.createElement('td');
     totalCookiesData.textContent = this.cookiesSoldEachHour[i];
     tableRowElement.appendChild(totalCookiesData);
+
   }
-
-
-    
-
   var dailyCookieTotalsByStore = document.createElement('td');
   dailyCookieTotalsByStore.textContent = this.totalCookiesForTheDay;
   tableRowElement.appendChild(dailyCookieTotalsByStore);
 
-  
+
+
   parentElement.appendChild(tableRowElement);
 };
 
@@ -174,5 +177,5 @@ paris.render();
 lima.render();
 generateFooterRow();
 formElement.addEventListener('submit', handleSubmit);
-console.log (allStores);
-console.log (totalOfTotals);
+console.log(allStores);
+console.log(totalOfTotals);
